@@ -15,9 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: 'set build id'
-        id: build    
+    steps:  
       - name: checkout-sourcecode
         uses: actions/checkout@v2
       - name: build-nodejs
