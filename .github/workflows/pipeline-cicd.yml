@@ -9,16 +9,12 @@ env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REPO_NAME: ${{secrets.REPO_NAME}}
-  BUILD_ID: ${{ steps.build.outputs.id }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: set build id
-        id: build
-        run:  echo "::set-output name=id::$(date +%s)"
       - name: checkout-sourcecode
         uses: actions/checkout@v2
       - name: build-nodejs
@@ -40,6 +36,6 @@ jobs:
           run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         - name: build docker image
-          run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:$BUILD_ID
+          run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME
         - name: docker push to repo
-          run: docker push $DOCKER_USER/$REPO_NAME:$BUILD_ID 
+          run: docker push $DOCKER_USER/$REPO_NAME
