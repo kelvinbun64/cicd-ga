@@ -9,7 +9,7 @@ env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REPO_NAME: ${{secrets.REPO_NAME}}
-  BUILD_ID: ${{ steps.build_id.outputs.id }}
+  BUILD_ID: ${{ steps.build.outputs.id }}
 
 jobs:
   build:
@@ -28,3 +28,15 @@ jobs:
         run: npm run build --if-present
       - name: test code
         run: npm test
+   
+  build-to-image:
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: docker login
+          run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        - name: build docker image
+          run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:$BUILD_ID
+        - name: docker push to repo
+          run: docker push $DOCKER_USER/$REPO_NAME:$BUILD_ID 
