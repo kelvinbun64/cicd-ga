@@ -1,0 +1,24 @@
+name: pipeline-cicd-nodejs
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout-sourcecode
+      - uses: actions/checkout@v2
+      - name: build-nodejs
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: install depedencies
+        run: npm i
+      - name: build sourcecode
+        run: npm run build --if-present
+      - name: test code
+        run: npm test
