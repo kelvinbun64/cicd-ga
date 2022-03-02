@@ -35,10 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: docker login
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: build docker image
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:$BUILD_ID
-    - name: docker push to repo
-      run: docker push $DOCKER_USER/$REPO_NAME:$BUILD_ID
+      - name: docker login
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: build docker image
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:$BUILD_ID
+      - name: docker push to repo
+        run: docker push $DOCKER_USER/$REPO_NAME:$BUILD_ID
