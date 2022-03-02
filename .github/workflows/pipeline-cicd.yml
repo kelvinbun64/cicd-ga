@@ -15,7 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:  
+    steps:
+      - name: set build id
+        id: build
+        run:  echo "::set-output name=id::$(date +%s)"
       - name: checkout-sourcecode
         uses: actions/checkout@v2
       - name: build-nodejs
