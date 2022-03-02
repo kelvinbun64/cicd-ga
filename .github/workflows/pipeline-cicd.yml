@@ -1,9 +1,6 @@
 name: pipeline-cicd-nodejs
 
-on:
-  push:
-    branches:
-      - "main"
+on: push
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
@@ -28,8 +25,9 @@ jobs:
       - name: test code
         run: npm test
    
-  build-to-image:
+  build-to-image-to-prod:
       needs: build
+      if: ${{ github.ref == 'refs/heads/master' }}
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
