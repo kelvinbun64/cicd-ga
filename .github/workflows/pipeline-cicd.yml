@@ -11,9 +11,9 @@ jobs:
 
     steps:
       - name: checkout-sourcecode
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: build-nodejs
-      - uses: actions/setup-node@v1
+        uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: install depedencies
