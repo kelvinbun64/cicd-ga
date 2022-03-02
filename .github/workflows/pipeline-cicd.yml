@@ -9,6 +9,7 @@ env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REPO_NAME: ${{secrets.REPO_NAME}}
+  BUILD_ID: ${{ steps.build_id.outputs.id }}
 
 jobs:
   build:
@@ -23,9 +24,7 @@ jobs:
         # store the build id to a folder that we can later cache.
         run: |
           mkdir -p .build-id 
-          echo $BUILD_ID > .build-id/id
-        env:
-          BUILD_ID: ${{ steps.build_id.outputs.id }}
+          echo $BUILD_ID > .build-id/id    
       - name: checkout-sourcecode
         uses: actions/checkout@v2
       - name: build-nodejs
